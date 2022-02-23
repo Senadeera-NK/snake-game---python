@@ -1,34 +1,44 @@
+from email import message
 from tkinter import *
 from Snake import *
 from Food import *
-import random
 import time
 
-def randomFood(snake):
-  coordinates = snake.snakeCoordinates()
-  print('first x : ', coordinates[0])
-  print('second x : ', coordinates[2])
+def start():
+  food = Food(canvas,"red")
+  snake = Snake(canvas,0,0,10,10,10,0,"black")
+  return food, snake
 
-  xRandom = random.randint(0,500)
-  yRandom = random.randint(0,500)
-  Food(canvas,xRandom,yRandom,"blue")
- 
+def AfterSnakeEatFood():
+  snakeCoordinates = snake.snakeCoordinates()
+  foodCoordinates = food.foodCoordinates()
+  print('--------------------------------------')
+  print('snake x first: ',snakeCoordinates[0])
+  print('food x first: ',foodCoordinates[0])
+  foodRange0 = [foodCoordinates[0],foodCoordinates[0]+1,foodCoordinates[0]+2,foodCoordinates[0]+3,foodCoordinates[0]+4,foodCoordinates[0]+5,foodCoordinates[0]+6,foodCoordinates[0]+7,foodCoordinates[0]+9,foodCoordinates[0]+10]
+
+
+  if(snakeCoordinates[0] in foodRange0):
+    canvas.delete(food)
+    snake.growSnake()
+
 
 window = Tk()
 window.geometry("500x500")
 window.title("Snake Game")
 
-canvas = Canvas(window,width=500, height=500)
+frame = Frame(window)
+frame.pack()
+
+canvas = Canvas(frame,width=500, height=500)
 canvas.pack()
 
-snake = Snake(canvas,0,0,100,10,10,0,"black")
-
-randomFood(snake)
+start()
 
 while True:
-  snake.move()
+  snake.move(window)
+  AfterSnakeEatFood()
   window.update()
   time.sleep(0.5)
-
 
 window.mainloop()
