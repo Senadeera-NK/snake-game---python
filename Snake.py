@@ -43,8 +43,9 @@ class Snake:
     self.yVelocity = 0
     print('done !!!!!!!!!!!!!!!!!!!!!!!!')
   
-  def growSnake(self):
-    self.width += 10
+  def growSnake(self,snake):
+    snake.coords(self.width+=10)
+    print('snake grew !!!')
 
     
   def snakeCoordinates(self):
